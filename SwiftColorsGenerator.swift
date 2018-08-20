@@ -99,9 +99,9 @@ func generateFile() {
             fileContent.append("alpha: \(components.alpha)")
             fileContent.append(")\n")
         }
-        print(fileContent)
     }
     fileContent.append("}\n")
+    print(fileContent)
     do {
         try file!.write(data: fileContent.data(using: .utf8)!)
     } catch {
