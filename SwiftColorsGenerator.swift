@@ -28,6 +28,7 @@ struct ColorComponents: Codable {
     var alpha: String
 }
 
+let folder: Folder = Folder.current
 var allAssets: [Folder] = [Folder]()
 var colors: [ColorSet] = [ColorSet]()
 
@@ -67,7 +68,6 @@ func contentFiles(from folders: [Folder]) {
 }
 
 func generateFile() {
-    let folder = Folder.current
     let subfolderName = "MarathonGenerated"
     
     var subfolder = try? folder.subfolder(named: subfolderName)
@@ -94,11 +94,12 @@ func generateFile() {
         fileContent.append(": UIColor = #colorLiteral(")
         if let components = color.colors.last?.color.components {
             fileContent.append("red: \(components.red), ")
-            fileContent.append("green \(components.green), ")
+            fileContent.append("green: \(components.green), ")
             fileContent.append("blue: \(components.blue), ")
             fileContent.append("alpha: \(components.alpha)")
             fileContent.append(")\n")
         }
+        print(fileContent)
     }
     fileContent.append("}\n")
     do {
@@ -108,6 +109,6 @@ func generateFile() {
     }
 }
 
-assets(from: Folder.current) /* scan whole project and find .xcassets */
+assets(from: folder) /* scan whole project and find .xcassets */
 contentFiles(from: colorAssets()) /* create color assets references */
 generateFile()
